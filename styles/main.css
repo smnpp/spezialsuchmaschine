@@ -1,0 +1,121 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Gris clair, sobre et moderne */
+    color: #333; /* Texte neutre */
+}
+
+h1,
+h2,
+h3 {
+    font-weight: bold;
+    color: #fff; /* Titre sombre pour un effet premium */
+}
+
+a {
+    text-decoration: none;
+    color: #0077cc; /* Accent bleu, rappelant les véhicules modernes */
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #005599;
+}
+
+/* Header */
+header {
+    background-color: #000; /* Noir pour la modernité et le luxe */
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+nav {
+    margin: 10px 0;
+}
+
+nav a {
+    margin: 0 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+/* Main Content */
+main {
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); /* Ombre légère pour un effet premium */
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+main h2 {
+    color: #333;
+    border-bottom: 2px solid #000;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+/* Brand Sections */
+.brand-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.brand-card {
+    background-color: #f9f9f9; /* Fond clair pour contraste */
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    flex: 1 1 calc(25% - 20px); /* Adaptable pour 4 cartes par ligne */
+    text-align: center;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.brand-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.brand-card img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.brand-card h3 {
+    margin: 10px 0;
+    color: #111;
+}
+
+.brand-card p {
+    color: #555;
+    font-size: 0.9rem;
+}
+
+/* Footer */
+footer {
+    background-color: #222; /* Noir profond */
+    color: #bbb;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 0.8rem;
+}
+
+footer a {
+    color: #bbb;
+}
+
+footer a:hover {
+    color: #fff;
+}

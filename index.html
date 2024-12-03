@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Moteur de Recherche</title>
+        <link rel="stylesheet" href="styles/main.css" />
+    </head>
+    <body>
+        <header>
+            <h1>Moteur de Recherche</h1>
+            <p>Recherchez rapidement dans notre base de données</p>
+        </header>
+        <main>
+            <form action="/search" method="GET">
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="Tapez votre recherche ici..."
+                    required
+                />
+                <button type="submit">Rechercher</button>
+            </form>
+        </main>
+        <footer>
+            &copy; 2024 Votre Moteur de Recherche. Tous droits réservés.
+        </footer>
+    </body>
+</html>
