@@ -47,7 +47,6 @@ function removeResultsContainer() {
 }
 
 // Fonction pour afficher les résultats dans le conteneur
-// Fonction pour afficher les résultats directement dans le conteneur de recherche
 function displayResults(results) {
     let container = document.getElementById("search-autocomplete");
 
@@ -67,7 +66,7 @@ function displayResults(results) {
         return;
     }
 
-    // Ajoutez les résultats
+    // Ajoutez les résultats sous forme de lien
     results.forEach(result => {
         const suggestion = document.createElement("div");
         suggestion.textContent = result.modelLabel.value;
@@ -75,8 +74,20 @@ function displayResults(results) {
         suggestion.style.cursor = "pointer";
         suggestion.style.borderBottom = "1px solid #f0f0f0";
 
+        // Créer un lien vers la page du modèle
+        const modelLink = document.createElement("a");
+        modelLink.href = `modele.html?name=${encodeURIComponent(
+            result.model.value.split("/").pop()
+        )}`;
+        modelLink.textContent = result.modelLabel.value;
+        modelLink.style.textDecoration = "none";
+        modelLink.style.color = "black";
+
+        suggestion.innerHTML = "";
+        suggestion.appendChild(modelLink);
+
         suggestion.addEventListener("click", () => {
-            searchInput.value = result.modelLabel.value;
+            window.location.href = modelLink.href;
             container.innerHTML = ""; // Vider les résultats après sélection
         });
 
