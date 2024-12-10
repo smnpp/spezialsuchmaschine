@@ -105,7 +105,7 @@ searchInput.addEventListener("input", async () => {
         return;
     }
 
-    const sparqlQuery = getModelSearchQuery(userInput);
+    const sparqlQuery = getDeutchModelSearchQuery(userInput);
     const results = await executeSparqlQuery(sparqlQuery);
     displayResults(results);
 });
