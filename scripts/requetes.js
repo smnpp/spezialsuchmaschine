@@ -31,52 +31,52 @@ PREFIX dbr: <http://dbpedia.org/resource/>
 SELECT DISTINCT ?label ?abstract ?production ?designerName ?layoutLabel ?engine ?manufacturerLabel ?relatedMeanOfTransportation ?relatedMeanOfTransportationLabel ?image
 WHERE {
     # Nom et description du modèle
-    dbr:${userInput} rdfs:label ?label .
-    dbr:${userInput} dbo:abstract ?abstract .
+    <http://dbpedia.org/resource/${userInput}> rdfs:label ?label .
+    <http://dbpedia.org/resource/${userInput}> dbo:abstract ?abstract .
     FILTER(LANG(?label) = "fr") .
     FILTER(LANG(?abstract) = "fr") .
 
     # Année de production
     OPTIONAL {
-        dbr:${userInput} dbp:production ?production .
+        <http://dbpedia.org/resource/${userInput}> dbp:production ?production .
     }
 
     # Designers
     OPTIONAL {
-        dbr:${userInput} dbp:designer ?designer .
+        <http://dbpedia.org/resource/${userInput}> dbp:designer ?designer .
         ?designer rdfs:label ?designerName .
         FILTER(LANG(?designerName) = "fr") .
     }
 
     # Layout (Configuration)
     OPTIONAL {
-        dbr:${userInput} dbp:layout ?layout .
+        <http://dbpedia.org/resource/${userInput}> dbp:layout ?layout .
         ?layout rdfs:label ?layoutLabel .
         FILTER(LANG(?layoutLabel) = "fr") .
     }
 
     # Moteur
     OPTIONAL {
-        dbr:${userInput} dbp:engine ?engine .
+        <http://dbpedia.org/resource/${userInput}> dbp:engine ?engine .
     }
 
     # Fabricant
     OPTIONAL {
-        dbr:${userInput} dbp:manufacturer ?manufacturer .
+        <http://dbpedia.org/resource/${userInput}> dbp:manufacturer ?manufacturer .
         ?manufacturer rdfs:label ?manufacturerLabel .
         FILTER(LANG(?manufacturerLabel) = "en") .
     }
 
     # Moyens de transport associés
     OPTIONAL {
-        dbr:${userInput} dbo:relatedMeanOfTransportation ?relatedMeanOfTransportation .
+        <http://dbpedia.org/resource/${userInput}> dbo:relatedMeanOfTransportation ?relatedMeanOfTransportation .
         ?relatedMeanOfTransportation rdfs:label ?relatedMeanOfTransportationLabel .
         FILTER(LANG(?relatedMeanOfTransportationLabel) = "fr") .
     }
 
     # Images
     OPTIONAL {
-        dbr:${userInput} dbp:image ?image .
+        <http://dbpedia.org/resource/${userInput}> dbo:thumbnail ?image .
     }
 }
 `;

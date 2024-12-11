@@ -48,32 +48,40 @@ async function displayModelInfo() {
             bindings
                 .filter(binding => binding[key])
                 .map(binding => binding[key].value)
-        ).join(", ") || "Non disponible";
+        );
 
     // Extraire et afficher les informations
     const label = getValue(results, "label");
     const abstract = getValue(results, "abstract");
     const productionYear = getValue(results, "production");
-    const designers = getUniqueValues(results, "designerName");
-    const layout = getUniqueValues(results, "layoutLabel");
+    const designers =
+        getUniqueValues(results, "designerName").join(", ") || "Non disponible";
+    const layout =
+        getUniqueValues(results, "layoutLabel").join(", ") || "Non disponible";
     const engine = getValue(results, "engine");
     const manufacturer = getValue(results, "manufacturerLabel");
+    const imageSrc = getValue(results, "image");
+
     // Gérer les modèles associés sous forme de liens
-    const relatedTransport = getUniqueValues(
-        results,
-        "relatedMeanOfTransportationLabel"
-    );
-    /*
     const relatedTransportContainer =
         document.getElementById("related-transport");
     relatedTransportContainer.innerHTML = ""; // Réinitialiser le conteneur
-    if (relatedTransport.length > 0) {
-        relatedTransport.forEach(model => {
+    const relatedTransportURIs = getUniqueValues(
+        results,
+        "relatedMeanOfTransportation"
+    );
+    const relatedTransportLabels = getUniqueValues(
+        results,
+        "relatedMeanOfTransportationLabel"
+    );
+
+    if (relatedTransportURIs.length > 0 && relatedTransportLabels.length > 0) {
+        relatedTransportURIs.forEach((uri, index) => {
+            const label = relatedTransportLabels[index];
+            const modelName = uri.split("/").pop(); // Extraire le nom du modèle depuis l'URI
             const link = document.createElement("a");
-            const modelSlug = getValue(results, "relatedMeanOfTransportation"); // Convertir le nom du modèle pour l'URL
-            // link.href = `modele.html?name=${modelSlug}`;
-            link.href = `${modelSlug}`;
-            link.textContent = model;
+            link.href = `modele.html?name=${encodeURIComponent(modelName)}`;
+            link.textContent = label;
             link.style.display = "block";
             link.style.color = "#007bff";
             link.style.textDecoration = "none";
@@ -91,7 +99,6 @@ async function displayModelInfo() {
     } else {
         relatedTransportContainer.textContent = "Non disponible";
     }
-        */
 
     // Mettre à jour les éléments HTML
     document.getElementById("model-title").textContent = label;
@@ -101,7 +108,20 @@ async function displayModelInfo() {
     document.getElementById("layout").textContent = layout;
     document.getElementById("engine").textContent = engine;
     document.getElementById("manufacturer").textContent = manufacturer;
-    document.getElementById("related-transport").textContent = relatedTransport;
+
+    // Mettre à jour les images
+    const imagesContainer = document.getElementById("images");
+    imagesContainer.innerHTML = ""; // Réinitialiser le conteneur
+    if (imageSrc !== "Non disponible") {
+        const img = document.createElement("img");
+        img.src = imageSrc;
+        img.alt = `Image du modèle ${label}`;
+        img.style.maxWidth = "100%";
+        img.style.borderRadius = "8px";
+        imagesContainer.appendChild(img);
+    } else {
+        imagesContainer.textContent = "Image non disponible.";
+    }
 }
 
 // Exécuter la fonction lors du chargement de la page
