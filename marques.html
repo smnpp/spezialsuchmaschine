@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste des Marques</title>
+  <script type="module" src="./scripts/marques.js" defer></script>
+  <style>
+    /* Ajoute des styles simples pour la mise en page */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    #spinner {
+      font-style: italic;
+      color: gray;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    .marque-element {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>Liste des Marques de Voitures</h1>
+  <div id="spinner">Chargement des données...</div>
+  <ul id="marques-list"></ul>
+</body>
+</html>
