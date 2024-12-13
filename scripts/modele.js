@@ -42,6 +42,7 @@ function getUniqueValues(results, key) {
 // Fonction pour afficher les modèles associés sous forme de liens
 function displayRelatedModels(results, containerId) {
     const container = document.getElementById(containerId);
+    const parent = container.parentElement;
     container.innerHTML = ""; // Réinitialiser le conteneur
 
     const relatedURIs = getUniqueValues(results, "relatedMeanOfTransportation");
@@ -72,7 +73,7 @@ function displayRelatedModels(results, containerId) {
             container.appendChild(link);
         });
     } else {
-        container.textContent = "Non disponible";
+        parent.style.display = "none";
     }
 }
 
@@ -90,6 +91,7 @@ function updateContainer(containerId, content) {
 
 function displayManufacturer(results, containerId) {
     const container = document.getElementById(containerId);
+    const parent = container.parentElement;
     container.innerHTML = ""; // Réinitialiser le conteneur
 
     const relatedURIs = getUniqueValues(results, "manufacturer");
@@ -117,7 +119,7 @@ function displayManufacturer(results, containerId) {
             container.appendChild(link);
         });
     } else {
-        container.textContent = "Non disponible";
+        parent.style.display = "none";
     }
 }
 
