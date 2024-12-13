@@ -9,17 +9,16 @@
     </head>
     <body>
         <header>
-            <h1>Spezialsuchmaschine</h1>
+            <h1>
+                <a href="index.html">Spezialsuchmaschine</a>
+            </h1>
             <nav>
-                <a href="#marque">Audi</a>
-                <a href="#marque">BMW</a>
-                <a href="#marque">Mercedes</a>
-                <a href="#marque">Porsche</a>
+                <a href="marque.html?name=Audi">Audi</a>
+                <a href="marque.html?name=BMW">BMW</a>
+                <a href="marque.html?name=Mercedes">Mercedes</a>
+                <a href="marque.html?name=Porsche">Porsche</a>
             </nav>
-        </header>
-        <main>
             <div id="search-container">
-                <label for="search">Rechercher un modèle ou une marque :</label>
                 <input
                     type="text"
                     id="search"
@@ -28,11 +27,11 @@
                 <!-- <button id="searchButton">Rechercher</button> -->
                 <div id="search-autocomplete"></div>
             </div>
-        </main>
+        </header>
+        <main></main>
 
-        <footer>
-            &copy; 2024 Spezialsuchmaschine. Tous droits réservés à l'hexanôme
-            H4302.
+        <footer class="fixed-footer">
+            &copy; 2024 Spezialsuchmaschine. Tous droits réservés.
         </footer>
 
         <script src="scripts/accueil.js"></script>

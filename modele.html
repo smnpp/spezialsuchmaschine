@@ -5,13 +5,28 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Informations sur le modèle</title>
         <link rel="stylesheet" href="styles/main.css" />
+        <link rel="stylesheet" href="styles/recherche.css" />
     </head>
     <body>
         <header>
-            <h1>Informations sur le modèle</h1>
+            <h1>
+                <a href="index.html">Spezialsuchmaschine</a>
+            </h1>
             <nav>
-                <a href="index.html">Accueil</a>
+                <a href="marque.html?name=Audi">Audi</a>
+                <a href="marque.html?name=BMW">BMW</a>
+                <a href="marque.html?name=Mercedes">Mercedes</a>
+                <a href="marque.html?name=Porsche">Porsche</a>
             </nav>
+            <div id="search-container">
+                <input
+                    type="text"
+                    id="search"
+                    placeholder="Tapez un modèle, une marque ou juste une lettre..."
+                />
+                <!-- <button id="searchButton">Rechercher</button> -->
+                <div id="search-autocomplete"></div>
+            </div>
         </header>
 
         <main>
@@ -73,9 +88,12 @@
             </section>
         </main>
 
-        <footer>&copy; 2024 Informations Modèles. Tous droits réservés.</footer>
+        <footer class="fixed-footer">
+            &copy; 2024 Spezialsuchmaschine. Tous droits réservés.
+        </footer>
 
         <script src="scripts/requetes.js"></script>
         <script src="scripts/modele.js"></script>
+        <script src="scripts/recherche.js"></script>
     </body>
 </html>
