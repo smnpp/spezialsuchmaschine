@@ -21,64 +21,39 @@ async function executeSparqlQuery(sparqlQuery) {
     }
 }
 
-// Fonction pour mettre à jour les informations sur la page
-async function displayModelInfo() {
-    const modelName = getModelNameFromURL(); // Récupère le nom du modèle depuis l'URL
+// Fonction générique pour récupérer une valeur unique
+function getValue(results, key) {
+    return (
+        results.find(binding => binding[key])?.[key]?.value || "Non disponible"
+    );
+}
 
-    if (!modelName) {
-        console.error("Nom du modèle manquant dans l'URL.");
-        return;
-    }
-
-    const query = getModelInformations(modelName);
-    const results = await executeSparqlQuery(query);
-    console.log(results);
-
-    // Fonction pour éliminer les doublons dans un tableau
-    const removeDuplicates = array => [...new Set(array)];
-
-    // Fonction pour récupérer une valeur unique
-    const getValue = (bindings, key) =>
-        bindings.find(binding => binding[key])?.[key]?.value ||
-        "Non disponible";
-
-    // Fonction pour récupérer et dédupliquer les valeurs multiples
-    const getUniqueValues = (bindings, key) =>
-        removeDuplicates(
-            bindings
+// Fonction générique pour récupérer des valeurs multiples sans doublons
+function getUniqueValues(results, key) {
+    return [
+        ...new Set(
+            results
                 .filter(binding => binding[key])
                 .map(binding => binding[key].value)
-        );
+        )
+    ];
+}
 
-    // Extraire et afficher les informations
-    const label = getValue(results, "label");
-    const abstract = getValue(results, "abstract");
-    const productionYear = getValue(results, "production");
-    const designers =
-        getUniqueValues(results, "designerName").join(", ") || "Non disponible";
-    const layout =
-        getUniqueValues(results, "layoutLabel").join(", ") || "Non disponible";
-    const engine = getValue(results, "engine");
-    const manufacturer = getValue(results, "manufacturerLabel");
-    const imageSrc = getValue(results, "image");
+// Fonction pour afficher les modèles associés sous forme de liens
+function displayRelatedModels(results, containerId) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = ""; // Réinitialiser le conteneur
 
-    // Gérer les modèles associés sous forme de liens
-    const relatedTransportContainer =
-        document.getElementById("related-transport");
-    relatedTransportContainer.innerHTML = ""; // Réinitialiser le conteneur
-    const relatedTransportURIs = getUniqueValues(
-        results,
-        "relatedMeanOfTransportation"
-    );
-    const relatedTransportLabels = getUniqueValues(
+    const relatedURIs = getUniqueValues(results, "relatedMeanOfTransportation");
+    const relatedLabels = getUniqueValues(
         results,
         "relatedMeanOfTransportationLabel"
     );
 
-    if (relatedTransportURIs.length > 0 && relatedTransportLabels.length > 0) {
-        relatedTransportURIs.forEach((uri, index) => {
-            const label = relatedTransportLabels[index];
-            const modelName = uri.split("/").pop(); // Extraire le nom du modèle depuis l'URI
+    if (relatedURIs.length > 0 && relatedLabels.length > 0) {
+        relatedURIs.forEach((uri, index) => {
+            const label = relatedLabels[index] || "Lien inconnu";
+            const modelName = uri.split("/").pop();
             const link = document.createElement("a");
             link.href = `modele.html?name=${encodeURIComponent(modelName)}`;
             link.textContent = label;
@@ -94,22 +69,119 @@ async function displayModelInfo() {
                 "mouseout",
                 () => (link.style.textDecoration = "none")
             );
-            relatedTransportContainer.appendChild(link);
+            container.appendChild(link);
         });
     } else {
-        relatedTransportContainer.textContent = "Non disponible";
+        container.textContent = "Non disponible";
+    }
+}
+
+function updateContainer(containerId, content) {
+    const container = document.getElementById(containerId);
+    const parent = container.parentElement;
+    if (content && content !== "Non disponible") {
+        container.textContent = content; // Met à jour le contenu
+        container.style.display = ""; // Affiche le conteneur s'il était masqué
+    } else {
+        // container.textContent = "Donnée non disponible"; // Masque le conteneur s'il est vide
+        parent.style.display = "none"; // Masque le container
+    }
+}
+
+function displayManufacturer(results, containerId) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = ""; // Réinitialiser le conteneur
+
+    const relatedURIs = getUniqueValues(results, "manufacturer");
+    const relatedLabels = getUniqueValues(results, "manufacturerLabel");
+
+    if (relatedURIs.length > 0 && relatedLabels.length > 0) {
+        relatedURIs.forEach((uri, index) => {
+            const label = relatedLabels[index] || "Lien inconnu";
+            const brandName = uri.split("/").pop();
+            const link = document.createElement("a");
+            link.href = `marque.html?name=${encodeURIComponent(brandName)}`;
+            link.textContent = label;
+            link.style.display = "block";
+            link.style.color = "#007bff";
+            link.style.textDecoration = "none";
+            link.style.marginBottom = "5px";
+            link.addEventListener(
+                "mouseover",
+                () => (link.style.textDecoration = "underline")
+            );
+            link.addEventListener(
+                "mouseout",
+                () => (link.style.textDecoration = "none")
+            );
+            container.appendChild(link);
+        });
+    } else {
+        container.textContent = "Non disponible";
+    }
+}
+
+// Fonction principale pour afficher les informations du modèle
+async function displayModelInfo() {
+    const modelName = getModelNameFromURL();
+
+    if (!modelName) {
+        console.error("Nom du modèle manquant dans l'URL.");
+        return;
     }
 
-    // Mettre à jour les éléments HTML
-    document.getElementById("model-title").textContent = label;
-    document.getElementById("model-description").textContent = abstract;
-    document.getElementById("production-year").textContent = productionYear;
-    document.getElementById("designers").textContent = designers;
-    document.getElementById("layout").textContent = layout;
-    document.getElementById("engine").textContent = engine;
-    document.getElementById("manufacturer").textContent = manufacturer;
+    // Récupérer les informations via des requêtes segmentées
+    const labelResults = await executeSparqlQuery(getModelLabel(modelName));
+    const abstractResults = await executeSparqlQuery(
+        getModelAbstract(modelName)
+    );
+    const productionResults = await executeSparqlQuery(
+        getModelProduction(modelName)
+    );
+    const designerResults = await executeSparqlQuery(
+        getModelDesigner(modelName)
+    );
+    const layoutResults = await executeSparqlQuery(getModelLayout(modelName));
+    const engineResults = await executeSparqlQuery(getModelEngine(modelName));
+    const manufacturerResults = await executeSparqlQuery(
+        getModelManufacturer(modelName)
+    );
+    const relatedModelsResults = await executeSparqlQuery(
+        getModelRelatedMeanOfTransportation(modelName)
+    );
+    const imageResults = await executeSparqlQuery(getModelImage(modelName));
+    console.log(imageResults);
 
-    // Mettre à jour les images
+    // Extraire les informations
+    const label = getValue(labelResults, "label");
+    const abstract = getValue(abstractResults, "abstract");
+    const productionYear = getValue(productionResults, "production");
+    const designers =
+        getUniqueValues(designerResults, "designerName").join(", ") ||
+        "Non disponible";
+    const layout =
+        getUniqueValues(layoutResults, "layoutLabel").join(", ") ||
+        "Non disponible";
+    const engine = getValue(engineResults, "engine");
+    const manufacturer = getValue(manufacturerResults, "manufacturerLabel");
+    const imageSrc = getValue(imageResults, "image");
+
+    // Mettre à jour les éléments HTML
+    // document.getElementById("model-title").textContent = label;
+    updateContainer("model-title", label);
+    updateContainer("model-description", abstract);
+    updateContainer("production-year", productionYear);
+    updateContainer("designers", designers);
+    updateContainer("layout", layout);
+    updateContainer("engine", engine);
+
+    // affiche la marque
+    displayManufacturer(manufacturerResults, "manufacturer");
+
+    // Afficher les modèles associés
+    displayRelatedModels(relatedModelsResults, "related-transport");
+
+    // Afficher l'image
     const imagesContainer = document.getElementById("images");
     imagesContainer.innerHTML = ""; // Réinitialiser le conteneur
     if (imageSrc !== "Non disponible") {

@@ -22,62 +22,94 @@ function getDeutchModelSearchQuery(userInput) {
     `;
 }
 
-function getModelInformations(userInput) {
-    return `PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX dbp: <http://dbpedia.org/property/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX dbr: <http://dbpedia.org/resource/>
-
-SELECT DISTINCT ?label ?abstract ?production ?designerName ?layoutLabel ?engine ?manufacturerLabel ?relatedMeanOfTransportation ?relatedMeanOfTransportationLabel ?image
+function getModelAbstract(userInput) {
+    return `SELECT DISTINCT ?abstract
 WHERE {
-    # Nom et description du modèle
-    <http://dbpedia.org/resource/${userInput}> rdfs:label ?label .
+OPTIONAL {
     <http://dbpedia.org/resource/${userInput}> dbo:abstract ?abstract .
-    FILTER(LANG(?label) = "fr") .
     FILTER(LANG(?abstract) = "fr") .
-
-    # Année de production
-    OPTIONAL {
-        <http://dbpedia.org/resource/${userInput}> dbp:production ?production .
-    }
-
-    # Designers
-    OPTIONAL {
-        <http://dbpedia.org/resource/${userInput}> dbp:designer ?designer .
-        ?designer rdfs:label ?designerName .
-        FILTER(LANG(?designerName) = "fr") .
-    }
-
-    # Layout (Configuration)
-    OPTIONAL {
-        <http://dbpedia.org/resource/${userInput}> dbp:layout ?layout .
-        ?layout rdfs:label ?layoutLabel .
-        FILTER(LANG(?layoutLabel) = "fr") .
-    }
-
-    # Moteur
-    OPTIONAL {
-        <http://dbpedia.org/resource/${userInput}> dbp:engine ?engine .
-    }
-
-    # Fabricant
-    OPTIONAL {
-        <http://dbpedia.org/resource/${userInput}> dbp:manufacturer ?manufacturer .
-        ?manufacturer rdfs:label ?manufacturerLabel .
-        FILTER(LANG(?manufacturerLabel) = "en") .
-    }
-
-    # Moyens de transport associés
-    OPTIONAL {
-        <http://dbpedia.org/resource/${userInput}> dbo:relatedMeanOfTransportation ?relatedMeanOfTransportation .
-        ?relatedMeanOfTransportation rdfs:label ?relatedMeanOfTransportationLabel .
-        FILTER(LANG(?relatedMeanOfTransportationLabel) = "fr") .
-    }
-
-    # Images
-    OPTIONAL {
-        <http://dbpedia.org/resource/${userInput}> dbo:thumbnail ?image .
-    }
+} 
+}`;
 }
-`;
+
+function getModelLabel(userInput) {
+    return `SELECT DISTINCT ?label
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> rdfs:label ?label .
+    FILTER(LANG(?label) = "fr") .
+}
+}`;
+}
+
+function getModelProduction(userInput) {
+    return `SELECT DISTINCT ?production
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbp:production ?production .
+    FILTER(LANG(?label) = "fr") .
+}
+}`;
+}
+
+function getModelDesigner(userInput) {
+    return `SELECT DISTINCT ?designerName
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbp:designer ?designer .
+    ?designer rdfs:label ?designerName .
+    FILTER(LANG(?designerName) = "en") .
+}
+}`;
+}
+
+function getModelLayout(userInput) {
+    return `SELECT DISTINCT ?layoutLabel
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbp:layout ?layout .
+    ?layout rdfs:label ?layoutLabel .
+    FILTER(LANG(?layoutLabel) = "en") .
+}
+}`;
+}
+
+function getModelEngine(userInput) {
+    return `SELECT DISTINCT ?engine
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbp:engine ?engine .
+}
+}`;
+}
+
+function getModelManufacturer(userInput) {
+    return `SELECT DISTINCT ?manufacturer ?manufacturerLabel
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbp:manufacturer ?manufacturer .
+    ?manufacturer rdfs:label ?manufacturerLabel .
+    FILTER(LANG(?manufacturerLabel) = "en") .
+}
+}`;
+}
+
+function getModelRelatedMeanOfTransportation(userInput) {
+    return `SELECT DISTINCT ?relatedMeanOfTransportation ?relatedMeanOfTransportationLabel
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbo:relatedMeanOfTransportation ?relatedMeanOfTransportation .
+    ?relatedMeanOfTransportation rdfs:label ?relatedMeanOfTransportationLabel .
+    FILTER(LANG(?relatedMeanOfTransportationLabel) = "fr") .
+}
+}`;
+}
+
+function getModelImage(userInput) {
+    return `SELECT DISTINCT ?image
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbo:thumbnail ?image .
+}
+}`;
 }
