@@ -2,11 +2,11 @@
 #search-container {
     max-width: 600px;
     margin: 0 auto;
-    /* padding: 10px; */
+    padding: 10px;
     /* border: 1px solid #ccc; */
     border-radius: 8px;
     /* background-color: #fff; */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /*  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
     position: relative; /* Important pour contenir les résultats */
     overflow: hidden; /* S'assure que le contenu ne déborde pas */
 }
@@ -38,7 +38,7 @@
     padding: 10px;
     cursor: pointer;
     border-bottom: 1px solid #f0f0f0;
-    color: #333;
+    color: #ccc;
 }
 
 #search-autocomplete div:hover {

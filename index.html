@@ -6,6 +6,7 @@
         <title>Moteur de Recherche</title>
         <link rel="stylesheet" href="styles/main.css" />
         <link rel="stylesheet" href="styles/recherche.css" />
+        <link rel="stylesheet" href="styles/index.css" />
     </head>
     <body>
         <header>
@@ -24,60 +25,95 @@
                 <input
                     type="text"
                     id="search"
-                    placeholder="Tapez un modèle, une marque ou juste une lettre..."
+                    placeholder="Recherchez un modèle..."
                 />
                 <!-- <button id="searchButton">Rechercher</button> -->
                 <div id="search-autocomplete"></div>
             </div>
+
+            <section id="favorite-models" class="favorite-models-section">
+                <h2>Nos modèles préférés</h2>
+                <div class="models-container">
+                    <div class="model-card">
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/f/f3/2022_BMW_M3_Touring.jpg"
+                            alt="BMW M3"
+                            class="model-image"
+                        />
+                        <h3 class="model-title">BMW M3</h3>
+                        <a href="modele.html?name=BMW_M3" class="model-link"
+                            >Voir plus</a
+                        >
+                    </div>
+                    <div class="model-card">
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/a/af/BMW_M4_%28G82%29_IMG_4183.jpg"
+                            alt="BMW M4"
+                            class="model-image"
+                        />
+                        <h3 class="model-title">BMW M4</h3>
+                        <a href="modele.html?name=BMW_M4" class="model-link"
+                            >Voir plus</a
+                        >
+                    </div>
+                    <div class="model-card">
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/8/83/2021_BMW_M5_CS.jpg"
+                            alt="BMW M5"
+                            class="model-image"
+                        />
+                        <h3 class="model-title">BMW M5</h3>
+                        <a href="modele.html?name=BMW_M5" class="model-link"
+                            >Voir plus</a
+                        >
+                    </div>
+                    <div class="model-card">
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/5/54/Porsche_911_GT2RS_yellow3_IMG_0685.jpg"
+                            alt="Porsche 911"
+                            class="model-image"
+                        />
+                        <h3 class="model-title">Porsche 911</h3>
+                        <a
+                            href="modele.html?name=Porsche_911"
+                            class="model-link"
+                            >Voir plus</a
+                        >
+                    </div>
+                    <div class="model-card">
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Mercedes-AMG_G_63_%282018%29_IMG_4370.jpg"
+                            alt="Class G AMG"
+                            class="model-image"
+                        />
+                        <h3 class="model-title">Mercedes-Benz AMG G63</h3>
+                        <a
+                            href="modele.html?name=Mercedes-Benz_G-Class"
+                            class="model-link"
+                            >Voir plus</a
+                        >
+                    </div>
+                    <div class="model-card">
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/5/58/Porsche_911_%28930%29_Turbo_%286889035025%29.jpg"
+                            alt="Porsche 930"
+                            class="model-image"
+                        />
+                        <h3 class="model-title">Porsche 930</h3>
+                        <a
+                            href="modele.html?name=Mercedes-Benz_G-Class"
+                            class="model-link"
+                            >Voir plus</a
+                        >
+                    </div>
+                </div>
+            </section>
         </main>
 
-        <footer class="fixed-footer">
-            &copy; 2024 Spezialsuchmaschine. Tous droits réservés.
-        </footer>
+        <footer>&copy; 2024 Spezialsuchmaschine. Tous droits réservés.</footer>
 
         <script src="scripts/accueil.js"></script>
         <script src="scripts/recherche.js"></script>
         <script src="scripts/requetes.js"></script>
-
-        <script>
-            homecards([
-                featuredTopic(
-                    "Q796778",
-                    "X5",
-                    "modele",
-                    "Q26678",
-                    "BMW",
-                    "marque",
-                    "https://www.wikidata.org/wiki/Q796778#/media/File:2019_BMW_X5_M50d_Automatic_3.0.jpg"
-                ),
-                featuredTopic(
-                    "Q796579",
-                    "M3",
-                    "modele",
-                    "Q26678",
-                    "BMW",
-                    "marque",
-                    "https://www.wikidata.org/wiki/Q796579#/media/File:DT121471_(4725542038).jpg"
-                ),
-                featuredTopic(
-                    "Q796799",
-                    "i8",
-                    "modele",
-                    "Q26678",
-                    "BMW",
-                    "marque",
-                    "https://www.wikidata.org/wiki/Q796799#/media/File:2016_BMW_i8.jpg"
-                ),
-                featuredTopic(
-                    "Q109932430",
-                    "1 series",
-                    "modele",
-                    "Q26678",
-                    "BMW",
-                    "marque",
-                    "https://www.wikidata.org/wiki/Q796395#/media/File:BMW_F40_120i_M_Sport_Misano_Blue_(5).jpg"
-                )
-            ]);
-        </script>
     </body>
 </html>

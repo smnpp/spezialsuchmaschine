@@ -103,13 +103,17 @@ main h2 {
     font-size: 0.9rem;
 }
 
-/* Footer */
+.page-wrapper {
+    flex: 1; /* Le contenu principal occupe l'espace restant */
+}
+
+/* Footer sticky */
 footer {
-    background-color: #222; /* Noir profond */
-    color: #bbb;
+    background-color: #222;
+    color: white;
     text-align: center;
-    padding: 10px 0;
-    font-size: 0.8rem;
+    padding: 10px 20px;
+    font-size: 0.9em;
 }
 
 footer a {
@@ -120,8 +124,8 @@ footer a:hover {
     color: #fff;
 }
 
-.fixed-footer {
-    position: fixed;
+.sticky-footer {
+    position: sticky;
     bottom: 0;
     left: 0;
     width: 100%;
