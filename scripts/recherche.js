@@ -1,23 +1,6 @@
 // Récupération des éléments de l'interface
 const searchInput = document.getElementById("search");
 
-// Fonction pour exécuter une requête SPARQL
-async function executeSparqlQuery(sparqlQuery) {
-    const endpointUrl = "https://dbpedia.org/sparql";
-    const fullUrl = `${endpointUrl}?query=${encodeURIComponent(
-        sparqlQuery
-    )}&format=json`;
-
-    try {
-        const response = await fetch(fullUrl);
-        const data = await response.json();
-        return data.results.bindings; // Retourne les résultats
-    } catch (error) {
-        console.error("Erreur lors de la requête SPARQL :", error);
-        return [];
-    }
-}
-
 // Fonction pour créer dynamiquement le conteneur des résultats
 function createResultsContainer() {
     let container = document.getElementById("search-autocomplete");
