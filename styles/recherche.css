@@ -24,9 +24,8 @@
 
 /* Conteneur des résultats */
 #search-autocomplete {
-    margin-top: 10px;
+    margin-top: 0px;
     background: white;
-    border-top: 1px solid #ccc; /* Ligne séparant les résultats du champ */
     max-height: 300px;
     overflow-y: auto;
     width: 100%;

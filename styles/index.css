@@ -40,7 +40,7 @@
 
 .model-title {
     font-size: 1.5em;
-    color: #007bff;
+    color: #222;
     margin-bottom: 10px;
 }
 
@@ -53,7 +53,7 @@
 .model-link {
     display: inline-block;
     padding: 10px 15px;
-    background-color: #007bff;
+    background-color: #222;
     color: white;
     text-decoration: none;
     border-radius: 4px;
