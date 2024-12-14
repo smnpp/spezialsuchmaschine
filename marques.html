@@ -1,33 +1,37 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Liste des Marques</title>
-  <script type="module" src="./scripts/marques.js" defer></script>
-  <style>
-    /* Ajoute des styles simples pour la mise en page */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    #spinner {
-      font-style: italic;
-      color: gray;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    .marque-element {
-      padding: 10px;
-      border-bottom: 1px solid #ccc;
-    }
-  </style>
-</head>
-<body>
-  <h1>Liste des Marques de Voitures</h1>
-  <div id="spinner">Chargement des données...</div>
-  <ul id="marques-list"></ul>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Marques Allemandes</title>
+        <link rel="stylesheet" href="styles/main.css" />
+        <link rel="stylesheet" href="styles/index.css" />
+    </head>
+    <body>
+        <header>
+            <h1>
+                <a href="index.html">Spezialsuchmaschine</a>
+            </h1>
+            <nav>
+                <a href="marque.html?name=Audi">Audi</a>
+                <a href="marque.html?name=BMW">BMW</a>
+                <a href="marque.html?name=Mercedes-Benz">Mercedes</a>
+                <a href="marque.html?name=Porsche">Porsche</a>
+                <a href="marques.html">Autres</a>
+            </nav>
+        </header>
+        <main>
+            <section class="favorite-brands-section">
+                <h2>Marques Allemandes</h2>
+                <div class="brands-container" id="brands-container">
+                    <!-- Les cartes seront générées ici via JavaScript -->
+                </div>
+            </section>
+        </main>
+
+        <footer>&copy; 2024 Spezialsuchmaschine. Tous droits réservés.</footer>
+
+        <script src="scripts/marques.js"></script>
+        <script src="scripts/requetes.js"></script>
+    </body>
 </html>

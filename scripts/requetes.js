@@ -22,6 +22,24 @@ function getDeutchModelSearchQuery(userInput) {
     `;
 }
 
+function getAllDeutchCarBrand() {
+    return `
+    PREFIX dbo: <http://dbpedia.org/ontology/>
+    PREFIX dbc: <http://dbpedia.org/resource/Category:>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX dct: <http://purl.org/dc/terms/>
+
+    SELECT DISTINCT ?manufacturer ?manufacturerLabel ?thumbnail
+    WHERE {
+        ?manufacturer dct:subject dbc:Car_manufacturers_of_Germany .
+        ?manufacturer rdfs:label ?manufacturerLabel .
+        FILTER(LANG(?manufacturerLabel) = "en") .
+        ?manufacturer dbo:thumbnail ?thumbnail
+}
+    ORDER BY ASC(?manufacturerLabel) 
+`;
+}
+
 function getDeutchCarBrand(userInput) {
     return `
     PREFIX dct: <http://purl.org/dc/terms/>
@@ -34,7 +52,9 @@ function getDeutchCarBrand(userInput) {
         ?manufacturer rdfs:label ?manufacturerLabel .
         FILTER(LANG(?manufacturerLabel) = "en") .
         FILTER(REGEX(STR(?manufacturerLabel), "^${userInput}", "i")) .
-} LIMIT 5
+}
+    ORDER BY ASC(?manufacturerLabel) 
+    LIMIT 5
 `;
 }
 

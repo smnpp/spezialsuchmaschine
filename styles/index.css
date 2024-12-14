@@ -60,6 +60,83 @@
     font-weight: bold;
 }
 
-.model-link:hover {
-    background-color: #0056b3;
+/* Section des marques */
+.favorite-brands-section {
+    margin: 40px 20px;
+    text-align: center;
+}
+
+.favorite-brands-section h2 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Conteneur principal des marques */
+.brands-container {
+    display: flex;
+    flex-direction: column; /* Superpose les cartes */
+    gap: 20px;
+    align-items: center; /* Centre les cartes horizontalement */
+}
+
+/* Cartes des marques */
+.brand-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 90%; /* Largeur plus grande */
+    max-width: 800px; /* Limite maximale pour éviter trop de largeur */
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* Aligne le contenu verticalement */
+    gap: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+/* Effet au survol */
+.brand-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Image dans la carte */
+.brand-image {
+    width: 100px; /* Taille fixe pour les images */
+    height: auto;
+    border-radius: 8px;
+    object-fit: contain; /* Adapte l'image à la taille sans la déformer */
+}
+
+/* Conteneur pour le contenu textuel */
+.brand-content {
+    flex: 1;
+    text-align: left;
+}
+
+/* Titre de la carte */
+.brand-title {
+    font-size: 1.5em;
+    color: #222;
+    margin: 0;
+}
+
+/* Lien pour voir plus */
+.brand-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #222;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-left: auto;
+}
+
+.brand-link:hover {
+    background-color: #555;
 }
