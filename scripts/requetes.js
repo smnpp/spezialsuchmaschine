@@ -114,44 +114,114 @@ OPTIONAL {
 }`;
 }
 
-export function requete_marques() {
-    return `
-            SELECT DISTINCT ?brand ?label ?foundingDate ?introduced ?logo ?thumbnail
-            WHERE {
-              ?car rdf:type dbo:Automobile ;
-                  dbp:manufacturer ?brand .
-              ?brand dbp:locationCountry "Germany"@en .
-              OPTIONAL { ?brand rdfs:label ?label FILTER (lang(?label) = "en") }
-              OPTIONAL { ?brand dbo:foundingDate ?foundingDate }
-              OPTIONAL { ?brand dbp:introduced ?introduced }
-              OPTIONAL { ?brand dbo:foundingYear ?foundingDate }
-              OPTIONAL { ?brand dbp:logo ?logo }
-              OPTIONAL { ?brand dbo:thumbnail ?thumbnail }
-            }
-            `;
+function getBrandLabel(userInput) {
+    return `SELECT DISTINCT ?label
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> rdfs:label ?label .
+    FILTER(LANG(?label) = "en") .
+}
+}`;
 }
 
-// Requête SPARQL pour récupérer les informations de la marque
-export function requete_details_marque(brandURI) {
-  return `
-      SELECT DISTINCT ?label ?abstract ?logo ?thumbnail ?foundingDate ?introduced ?country ?website  
-                      ?revenue ?product ?ownersLabel
-      WHERE {
-          <${brandURI}> rdfs:label ?label ;
-                       dbo:abstract ?abstract ;
-                       dbo:thumbnail ?thumbnail .
-          OPTIONAL { <${brandURI}> dbo:foundingDate ?foundingDate }
-          OPTIONAL { <${brandURI}> dbp:introduced ?introduced }
-          OPTIONAL { <${brandURI}> dbp:logo ?logo }
-          OPTIONAL { <${brandURI}> dbo:country ?country }
-          OPTIONAL { <${brandURI}> foaf:homepage ?website }
-          OPTIONAL { <${brandURI}> dbp:revenue ?revenue }
-          OPTIONAL { <${brandURI}> dbp:products ?product }
-          OPTIONAL { <${brandURI}> dbo:owners ?owners.
-                      ?owners rdfs:label ?ownersLabel }
-          FILTER (lang(?label) = "en" && lang(?abstract) = "en")
-      }
-      LIMIT 1
-  `;
+function getBrandAbstract(userInput) {
+    return `SELECT DISTINCT ?abstract
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbo:abstract ?abstract .
+    FILTER(LANG(?abstract) = "fr") .
+}
+}`;
 }
 
+function getBrandThumbnail(userInput) {
+    return `SELECT DISTINCT ?thumbnail
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbo:thumbnail ?thumbnail .
+}
+}`;
+}
+
+function getBrandFoundingDate(userInput) {
+    return `SELECT DISTINCT ?foundingDate
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbo:foundingDate ?foundingDate .
+}
+}`;
+}
+
+function getBrandIntroduced(userInput) {
+    return `SELECT DISTINCT ?introduced
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbp:introduced ?introduced .
+}
+}`;
+}
+
+function getBrandRevenue(userInput) {
+    return `SELECT DISTINCT ?revenue
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbp:revenue ?revenue .
+}
+}`;
+}
+
+function getBrandProducts(userInput) {
+    return `SELECT DISTINCT ?product
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbp:products ?product .
+}
+}`;
+}
+
+function getBrandOwners(userInput) {
+    return `SELECT DISTINCT ?owners ?ownersLabel
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbp:owners ?owners .
+    ?owners rdfs:label ?ownersLabel .
+    FILTER(LANG(?ownersLabel) = "en") .
+}
+}`;
+}
+
+function getBrandWebsite(userInput) {
+    return `SELECT DISTINCT ?website
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> foaf:homepage ?website .
+}
+}`;
+}
+
+function getBrandFounder(userInput) {
+    return `SELECT DISTINCT ?founder ?founderLabel
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbp:founder ?founder .
+    ?founder rdfs:label ?founderLabel .
+    FILTER(LANG(?founderLabel) = "en") .
+}
+}`;
+}
+
+function getBrandLocationCity(userInput) {
+    return `SELECT DISTINCT ?locationCity ?locationCityName
+WHERE {
+OPTIONAL {
+<http://dbpedia.org/resource/${userInput}> dbp:locationCity ?locationCity .
+?locationCity rdfs:label ?locationCityName .
+FILTER(LANG(?locationCityName) = "en") .
+}
+OPTIONAL {
+<http://dbpedia.org/resource/${userInput}> dbo:location ?locationCity .
+?locationCity rdfs:label ?locationCityName .
+FILTER(LANG(?locationCityName) = "en") .
+}
+}`;
+}

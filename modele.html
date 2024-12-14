@@ -6,6 +6,7 @@
         <title>Informations sur le modèle</title>
         <link rel="stylesheet" href="styles/main.css" />
         <link rel="stylesheet" href="styles/recherche.css" />
+        <link rel="stylesheet" href="styles/modele.css" />
     </head>
     <body>
         <header>
@@ -15,7 +16,7 @@
             <nav>
                 <a href="marque.html?name=Audi">Audi</a>
                 <a href="marque.html?name=BMW">BMW</a>
-                <a href="marque.html?name=Mercedes">Mercedes</a>
+                <a href="marque.html?name=Mercedes-Benz">Mercedes</a>
                 <a href="marque.html?name=Porsche">Porsche</a>
             </nav>
         </header>
@@ -35,62 +36,49 @@
                     <strong>Modèle :</strong>
                     <span id="model-title">Chargement...</span>
                 </h2>
-                <div id="details">
-                    <p>
-                        <div id="model-description-contaier">
+                <div id="model-container" class="flex-container">
+                    <!-- Section gauche : description -->
+                    <div id="model-details" class="left-column">
+                        <p>
                             <strong>Description :</strong>
                             <span id="model-description">Chargement...</span>
-                        </div>
-                    </p>
-                    <p>
-                        <div id="production-year-contaier">
+                        </p>
+                        <p>
                             <strong>Année de production :</strong>
                             <span id="production-year">Chargement...</span>
-                        </div>
-                    </p>
-                    <p>
-                        <div id="designers-contaier">
+                        </p>
+                        <p>
                             <strong>Designer(s) :</strong>
                             <span id="designers">Chargement...</span>
-                        </div>
-                    </p>
-                    <p>
-                        <div id="layout-contaier">
+                        </p>
+                        <p>
                             <strong>Layout :</strong>
                             <span id="layout">Chargement...</span>
-                        </div>
-                    </p>
-                    <p>
-                        <div id="related-transport-contaier">
+                        </p>
+                        <p>
                             <strong>Modèles associés :</strong>
                             <span id="related-transport">Chargement...</span>
-                        </div>
-                    </p>
-                    <p>
-                        <div id="engine-contaier">
+                        </p>
+                        <p>
                             <strong>Moteur :</strong>
                             <span id="engine">Chargement...</span>
-                        </div>
-                    </p>
-                    <p>
-                        <div id="manufacturer-contaier">
+                        </p>
+                        <p>
                             <strong>Constructeur :</strong>
                             <span id="manufacturer">Chargement...</span>
-                        </div>
-                    </p>
-                    <p>
-                        <div id="images-contaier">
-                            <strong>Images :</strong>
-                            <div id="images"></div>
-                        </div>
-                    </p>
+                        </p>
+                    </div>
+                    <!-- Section droite : image -->
+                    <div id="model-image" class="right-column">
+                        <div id="images"></div>
+                    </div>
                 </div>
+                <!-- Section sous les deux colonnes -->
+                <div id="additional-details"></div>
             </section>
         </main>
 
-        <footer>
-            &copy; 2024 Spezialsuchmaschine. Tous droits réservés.
-        </footer>
+        <footer>&copy; 2024 Spezialsuchmaschine. Tous droits réservés.</footer>
 
         <script src="scripts/requetes.js"></script>
         <script src="scripts/modele.js"></script>

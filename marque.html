@@ -1,14 +1,92 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails de la Marque</title>
-    <script type="module" src="./scripts/marque.js" defer></script>
-</head>
-<body>
-    <h1>Détails de la Marque</h1>
-    <div id="brand-details">Chargement...</div>
-    <a href="marques.html">Retour à la liste des marques</a>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Détails de la Marque</title>
+        <link rel="stylesheet" href="styles/main.css" />
+        <link rel="stylesheet" href="styles/marque.css" />
+        <link rel="stylesheet" href="styles/recherche.css" />
+    </head>
+    <body>
+        <header>
+            <h1>
+                <a href="index.html">Spezialsuchmaschine</a>
+            </h1>
+            <nav>
+                <a href="marque.html?name=Audi">Audi</a>
+                <a href="marque.html?name=BMW">BMW</a>
+                <a href="marque.html?name=Mercedes-Benz">Mercedes</a>
+                <a href="marque.html?name=Porsche">Porsche</a>
+            </nav>
+        </header>
+        <main>
+            <div id="search-container">
+                <input
+                    type="text"
+                    id="search"
+                    placeholder="Tapez un modèle, une marque ou juste une lettre..."
+                />
+                <!-- <button id="searchButton">Rechercher</button> -->
+                <div id="search-autocomplete"></div>
+            </div>
+            <section id="brand-info">
+                <h2>
+                    <strong>Détails de la Marque :</strong>
+                    <span id="brand-title">Chargement...</span>
+                    <a href="marques.html">Retour à la liste des marques</a>
+                </h2>
+                <div id="brand-container" class="flex-container">
+                    <div id="brand-details" class="left-column">
+                        <p>
+                            <strong>Description :</strong>
+                            <span id="brand-abstract">Chargement...</span>
+                        </p>
+                        <p>
+                            <strong>Date de fondation :</strong>
+                            <span id="fondation-year">Chargement...</span>
+                        </p>
+
+                        <p>
+                            <strong>Date d'introduction :</strong>
+                            <span id="introduction-year">Chargement...</span>
+                        </p>
+                        <p>
+                            <strong>Fondateur :</strong>
+                            <span id="founder">Chargement...</span>
+                        <p>
+                            <strong>Propriétaires :</strong>
+                            <span id="owners">Chargement...</span>
+                        </p>
+                        <p>
+                            <strong>Produits :</strong>
+                            <span id="products">Chargement...</span>
+                        </p>
+                        <p>
+                            <strong>Chiffre d'affaires :</strong>
+                            <span id="revenue">Chargement...</span>
+                        </p>
+                        <p>
+                            <strong>Ville : </strong>
+                            <span id="location-city">Chargement...</span>
+                        </p>
+                    </div>
+                    <div id="brand-image" class="right-column">
+                        <div id="brand-thumbnail"></div>
+                    </div>
+                </div>
+                <div id="additional-details">
+                    <p>
+                        <strong>Site Web :</strong>
+                        <div id="website"></div>
+                    </p>
+                </div>
+            </section>
+        </main>
+
+        <footer>&copy; 2024 Spezialsuchmaschine. Tous droits réservés.</footer>
+        <script src="scripts/marque.js"></script>
+        <script src="scripts/recherche.js"></script>
+        <script src="scripts/requetes.js"></script>
+    </body>
 </html>

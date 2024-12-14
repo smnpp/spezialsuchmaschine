@@ -1,0 +1,20 @@
+.flex-container {
+    display: flex;
+    justify-content: space-between; /* Espace entre la description et l'image */
+    align-items: flex-start; /* Aligner les éléments en haut */
+    gap: 20px; /* Espacement entre les colonnes */
+}
+
+.left-column {
+    flex: 1; /* La description occupe une largeur dynamique */
+}
+
+.right-column {
+    flex: 0.5; /* L'image occupe une largeur fixe ou plus petite */
+    text-align: center; /* Centrer l'image */
+}
+
+.right-column img {
+    max-width: 100%; /* Redimensionner l'image selon l'espace disponible */
+    height: auto; /* Garder les proportions */
+}

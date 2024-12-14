@@ -1,97 +1,157 @@
-import { dbpediaUrl } from './util.js';
-import { escapeHtml } from './util.js';
-import { requete_details_marque } from './requetes.js';
-
-// Fonction pour extraire l'URI de la marque depuis l'URL
-function getBrandURIFromQuery() {
-    console.debug("[getBrandURIFromQuery] Extraction de l'URI depuis l'URL.");
+function getBrandNameFromURL() {
     const params = new URLSearchParams(window.location.search);
-    const uri = params.get('uri');
-    console.debug(`[getBrandURIFromQuery] URI extraite : ${uri}`);
-    return uri; // Récupère l'URI
+    return params.get("name");
 }
 
-async function fetchBrandDetails(brandURI) {
+// Fonction pour exécuter une requête SPARQL
+async function executeSparqlQuery(sparqlQuery) {
+    const endpointUrl = "https://dbpedia.org/sparql";
+    const fullUrl = `${endpointUrl}?query=${encodeURIComponent(
+        sparqlQuery
+    )}&format=json`;
+
     try {
-        const url = dbpediaUrl(requete_details_marque(brandURI));
-        console.log("SPARQL URL:", url); // Log l'URL de la requête
-        const response = await fetch(url);
-
-        if (!response.ok) {
-            throw new Error("Erreur lors de la récupération des données");
-        }
-
+        const response = await fetch(fullUrl);
         const data = await response.json();
-        console.log("SPARQL Response:", data); // Log la réponse entière
-
-        if (!data.results || !data.results.bindings || data.results.bindings.length === 0) {
-            console.error("Aucun résultat trouvé pour l'URI :", brandURI);
-            return null;
-        }
-
-        const results = data.results.bindings[0];
-        console.log("Données de la marque:", results); // Log les données de la marque
-
-        return {
-            label: results.label?.value || 'Nom non disponible',
-            abstract: results.abstract?.value || 'Description non disponible',
-            logo: results.thumbnail?.value || results.logo?.value || null,
-            foundingDate: results.foundingDate?.value || 'Date de fondation non disponible',
-            introduced: results.introduced?.value || 'Date d’introduction non disponible',
-            website: results.website?.value || null,
-            founder: results.ownersLabel?.value || 'Propriétaires non disponible',
-            products: results.product?.value || 'Produits non disponibles',
-            revenue: results.revenue?.value || 'Chiffre d’affaires non disponible',
-        };
+        return data.results.bindings;
     } catch (error) {
-        console.error("Erreur lors de la récupération ou du traitement des données SPARQL:", error);
+        console.error("Erreur lors de la requête SPARQL :", error);
+        return [];
     }
 }
 
-// Fonction pour afficher les informations de la marque
-function renderBrandDetails(brand) {
-    const container = document.getElementById('brand-details');
+// Fonction générique pour récupérer une valeur unique
+function getValue(results, key) {
+    return (
+        results.find(binding => binding[key])?.[key]?.value || "Non disponible"
+    );
+}
 
-    if (!brand) {
-        container.innerHTML = "<p>Impossible de charger les détails de la marque. Vérifiez l'URI ou réessayez plus tard.</p>";
+// Fonction générique pour récupérer des valeurs multiples sans doublons
+function getUniqueValues(results, key) {
+    return [
+        ...new Set(
+            results
+                .filter(binding => binding[key])
+                .map(binding => binding[key].value)
+        )
+    ];
+}
+
+function updateContainer(containerId, content) {
+    const container = document.getElementById(containerId);
+    const parent = container.parentElement;
+    if (content && content !== "Non disponible") {
+        container.textContent = content; // Met à jour le contenu
+        container.style.display = ""; // Affiche le conteneur s'il était masqué
+    } else {
+        // container.textContent = "Donnée non disponible"; // Masque le conteneur s'il est vide
+        parent.style.display = "none"; // Masque le container
+    }
+}
+
+async function displayBrandInfo() {
+    const brandName = getBrandNameFromURL();
+
+    if (!brandName) {
+        console.error("Nom de la marque manquant dans l'URL.");
         return;
     }
 
-    const html = `
-        <h2>${escapeHtml(brand.label)}</h2>
-        ${brand.logo ? `<img src="${brand.logo}" alt="Logo de ${escapeHtml(brand.label)}">` : ''}
-        <p><strong>Description :</strong> ${escapeHtml(brand.abstract)}</p>
-        <p><strong>Date de fondation :</strong> ${escapeHtml(brand.foundingDate)}</p>
-        <p><strong>Date d’introduction :</strong> ${escapeHtml(brand.introduced)}</p>
-        <p><strong>Propriétaire(s) :</strong> ${escapeHtml(brand.founder)}</p>
-        <p><strong>Produits notables :</strong> ${escapeHtml(brand.products)}</p>
-        <p><strong>Chiffre d’affaires :</strong> ${escapeHtml(brand.revenue)}</p>
-        ${brand.website ? `<p><strong>Site officiel :</strong> <a href="${brand.website}" target="_blank">${escapeHtml(brand.website)}</a></p>` : ''}
-    `;
+    // Récupérer les informations via des requêtes segmentées
+    const labelResults = await executeSparqlQuery(getBrandLabel(brandName));
+    const abstractResults = await executeSparqlQuery(
+        getBrandAbstract(brandName)
+    );
+    const thumbnailResults = await executeSparqlQuery(
+        getBrandThumbnail(brandName)
+    );
+    const foundingDateResults = await executeSparqlQuery(
+        getBrandFoundingDate(brandName)
+    );
+    const introducedResults = await executeSparqlQuery(
+        getBrandIntroduced(brandName)
+    );
+    const revenueResults = await executeSparqlQuery(getBrandRevenue(brandName));
 
-    container.innerHTML = html;
-}
+    const productsResults = await executeSparqlQuery(
+        getBrandProducts(brandName)
+    );
 
+    const ownersResults = await executeSparqlQuery(getBrandOwners(brandName));
+    console.log(ownersResults);
 
-// Fonction principale pour initialiser la page
-async function init() {
-    console.debug("[init] Initialisation de la page.");
+    const websiteResults = await executeSparqlQuery(getBrandWebsite(brandName));
 
-    const brandURI = getBrandURIFromQuery();
+    const locationCityResults = await executeSparqlQuery(
+        getBrandLocationCity(brandName)
+    );
 
-    if (!brandURI) {
-        console.warn("[init] Aucune URI spécifiée dans les paramètres de l'URL.");
-        document.getElementById('brand-details').innerHTML = "<p>Aucune marque spécifiée.</p>";
-        return;
+    const founderResults = await executeSparqlQuery(getBrandFounder(brandName));
+
+    const label = getValue(labelResults, "label");
+    const abstract = getValue(abstractResults, "abstract");
+    const thumbnail = getValue(thumbnailResults, "thumbnail");
+    const foundingDate = getValue(foundingDateResults, "foundingDate");
+    const introduced = getValue(introducedResults, "introduced");
+    const revenue = getValue(revenueResults, "revenue");
+    const products = getUniqueValues(productsResults, "product");
+    const owners = getUniqueValues(ownersResults, "ownersLabel");
+    const website = getValue(websiteResults, "website");
+    const locationCity = getUniqueValues(
+        locationCityResults,
+        "locationCityName"
+    );
+    const founder = getUniqueValues(founderResults, "founderLabel");
+
+    updateContainer("brand-title", label);
+    updateContainer("brand-abstract", abstract);
+    updateContainer("fondation-year", foundingDate);
+    updateContainer("introduction-year", introduced);
+    updateContainer("revenue", revenue);
+    updateContainer("location-city", locationCity.join(", "));
+    updateContainer("products", products.join(", "));
+    updateContainer("owners", owners.join(", "));
+    updateContainer("founder", founder.join(", "));
+
+    const imagesContainer = document.getElementById("brand-thumbnail");
+    imagesContainer.innerHTML = ""; // Réinitialiser le conteneur
+    if (thumbnail !== "Non disponible") {
+        const img = document.createElement("img");
+        img.src = thumbnail;
+        img.alt = "";
+        img.style.maxWidth = "100%";
+        img.style.borderRadius = "8px";
+        imagesContainer.appendChild(img);
+    } else {
+        imagesContainer.textContent = "Image non disponible.";
     }
 
-    console.debug(`[init] URI spécifiée : ${brandURI}`);
+    const websiteContainer = document.getElementById("website");
+    if (website !== "Non disponible") {
+        const link = document.createElement("a");
+        link.href = website;
+        link.textContent = `Site officiel de ${label}`;
+        link.target = "_blank"; // Ouvrir dans un nouvel onglet
+        link.rel = "noopener noreferrer"; // Bonnes pratiques de sécurité
+        link.style.color = "#007bff";
+        link.style.textDecoration = "none";
 
-    const brandDetails = await fetchBrandDetails(brandURI);
-    renderBrandDetails(brandDetails);
+        link.addEventListener(
+            "mouseover",
+            () => (link.style.textDecoration = "underline")
+        );
+        link.addEventListener(
+            "mouseout",
+            () => (link.style.textDecoration = "none")
+        );
 
-    console.debug("[init] Initialisation terminée.");
+        websiteContainer.innerHTML = ""; // Réinitialiser le conteneur
+        websiteContainer.appendChild(link);
+    } else {
+        websiteContainer.style.display = "none";
+    }
 }
 
-// Lancer l'initialisation
-init();
+// Exécuter la fonction lors du chargement de la page
+document.addEventListener("DOMContentLoaded", displayBrandInfo);
