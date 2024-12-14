@@ -113,3 +113,115 @@ OPTIONAL {
 }
 }`;
 }
+
+function getBrandLabel(userInput) {
+    return `SELECT DISTINCT ?label
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> rdfs:label ?label .
+    FILTER(LANG(?label) = "en") .
+}
+}`;
+}
+
+function getBrandAbstract(userInput) {
+    return `SELECT DISTINCT ?abstract
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbo:abstract ?abstract .
+    FILTER(LANG(?abstract) = "fr") .
+}
+}`;
+}
+
+function getBrandThumbnail(userInput) {
+    return `SELECT DISTINCT ?thumbnail
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbo:thumbnail ?thumbnail .
+}
+}`;
+}
+
+function getBrandFoundingDate(userInput) {
+    return `SELECT DISTINCT ?foundingDate
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbo:foundingDate ?foundingDate .
+}
+}`;
+}
+
+function getBrandIntroduced(userInput) {
+    return `SELECT DISTINCT ?introduced
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbp:introduced ?introduced .
+}
+}`;
+}
+
+function getBrandRevenue(userInput) {
+    return `SELECT DISTINCT ?revenue
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbp:revenue ?revenue .
+}
+}`;
+}
+
+function getBrandProducts(userInput) {
+    return `SELECT DISTINCT ?product
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbp:products ?product .
+}
+}`;
+}
+
+function getBrandOwners(userInput) {
+    return `SELECT DISTINCT ?owners ?ownersLabel
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbp:owners ?owners .
+    ?owners rdfs:label ?ownersLabel .
+    FILTER(LANG(?ownersLabel) = "en") .
+}
+}`;
+}
+
+function getBrandWebsite(userInput) {
+    return `SELECT DISTINCT ?website
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> foaf:homepage ?website .
+}
+}`;
+}
+
+function getBrandFounder(userInput) {
+    return `SELECT DISTINCT ?founder ?founderLabel
+WHERE {
+OPTIONAL {
+    <http://dbpedia.org/resource/${userInput}> dbp:founder ?founder .
+    ?founder rdfs:label ?founderLabel .
+    FILTER(LANG(?founderLabel) = "en") .
+}
+}`;
+}
+
+function getBrandLocationCity(userInput) {
+    return `SELECT DISTINCT ?locationCity ?locationCityName
+WHERE {
+OPTIONAL {
+<http://dbpedia.org/resource/${userInput}> dbp:locationCity ?locationCity .
+?locationCity rdfs:label ?locationCityName .
+FILTER(LANG(?locationCityName) = "en") .
+}
+OPTIONAL {
+<http://dbpedia.org/resource/${userInput}> dbo:location ?locationCity .
+?locationCity rdfs:label ?locationCityName .
+FILTER(LANG(?locationCityName) = "en") .
+}
+}`;
+}
