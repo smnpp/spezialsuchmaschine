@@ -16,10 +16,26 @@ function getDeutchModelSearchQuery(userInput) {
         FILTER(LANG(?modelLabel) = "fr") .
         ?manufacturer rdfs:label ?manufacturerLabel .
         FILTER(LANG(?manufacturerLabel) = "fr") .
-        FILTER(REGEX(STR(?modelLabel), "${userInput}", "i")) .
+        FILTER(REGEX(STR(?modelLabel), "^${userInput}", "i")) .
     }
-    LIMIT 10
+    LIMIT 5
     `;
+}
+
+function getDeutchCarBrand(userInput) {
+    return `
+    PREFIX dct: <http://purl.org/dc/terms/>
+    PREFIX dbc: <http://dbpedia.org/resource/Category:>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+    SELECT DISTINCT ?manufacturer ?manufacturerLabel 
+    WHERE {
+        ?manufacturer dct:subject dbc:Car_manufacturers_of_Germany .
+        ?manufacturer rdfs:label ?manufacturerLabel .
+        FILTER(LANG(?manufacturerLabel) = "en") .
+        FILTER(REGEX(STR(?manufacturerLabel), "^${userInput}", "i")) .
+} LIMIT 5
+`;
 }
 
 function getModelAbstract(userInput) {
