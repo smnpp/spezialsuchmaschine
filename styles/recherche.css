@@ -24,12 +24,17 @@
 
 /* Conteneur des résultats */
 #search-autocomplete {
-    margin-top: 0px;
     background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     max-height: 300px;
     overflow-y: auto;
     width: 100%;
     z-index: 10;
+}
+
+#search-autocomplete h3 {
+    padding: 10px;
 }
 
 /* Résultats individuels */
