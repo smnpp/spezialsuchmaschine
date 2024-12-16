@@ -54,7 +54,6 @@ function displayResults(modelsResults, brandsResults) {
     if (!container) {
         container = document.createElement("div");
         container.id = "search-autocomplete";
-        container.style.marginTop = "10px";
         searchInput.parentNode.appendChild(container);
     }
 
@@ -67,7 +66,7 @@ function displayResults(modelsResults, brandsResults) {
     titleModel.style.color = "#333";
     container.appendChild(titleModel);
 
-    modelsResults.forEach(result => {
+    modelsResults.forEach((result) => {
         addLineResult(
             "modele",
             result.modelLabel.value,
@@ -82,7 +81,7 @@ function displayResults(modelsResults, brandsResults) {
     brandTitle.style.color = "#333";
     container.appendChild(brandTitle);
 
-    brandsResults.forEach(result => {
+    brandsResults.forEach((result) => {
         addLineResult(
             "marque",
             result.manufacturerLabel.value,
@@ -95,7 +94,7 @@ function displayResults(modelsResults, brandsResults) {
 function addLineResult(type, label, name, container) {
     const suggestion = document.createElement("div");
     suggestion.textContent = label;
-    suggestion.style.padding = "10px";
+    suggestion.style.padding = "15px";
     suggestion.style.cursor = "pointer";
     suggestion.style.borderBottom = "1px solid #f0f0f0";
 
@@ -148,7 +147,7 @@ searchInput.addEventListener("input", async () => {
 });
 
 // Supprimer le conteneur lorsque l'utilisateur clique en dehors
-document.addEventListener("click", event => {
+document.addEventListener("click", (event) => {
     if (!searchInput.contains(event.target)) {
         removeResultsContainer();
     }

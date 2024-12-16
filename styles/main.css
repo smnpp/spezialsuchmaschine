@@ -55,6 +55,7 @@ main {
     background-color: #fff;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); /* Ombre légère pour un effet premium */
     max-width: 1200px;
+    min-height: 70vh;
     margin: 20px auto;
 }
 
