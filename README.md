@@ -11,9 +11,10 @@ présentant les différentes marques.
 
 📋 Affichage des marques allemandes : Liste des marques triées par ordre
 alphabétique. \
-🔍 Recherche dynamique : Filtrage des résultats en fonction de la saisie de l'utilisateur.
-\
- 🖥️ Interface moderne : Cartes interactives avec boutons alignés pour chaque marque.
+🔍 Recherche dynamique : Filtrage des résultats en fonction de la saisie de l'utilisateur
+dans la bare de recherche. \
+ 🖥️ Interface moderne : Interface simple d'utilisation pour en découvrir d'avantage
+à propos des marques et modèles automobiles allemand.
 
 ## Technologies utilisées
 
@@ -21,16 +22,14 @@ alphabétique. \
 -   JavaScript : Gestion de la logique d'affichage et des requêtes dynamiques.
 -   SPARQL : Requête pour récupérer les marques depuis DBpedia.
 
-## Installation et utilisation
+## Prérequis
 
-Cloner le projet :
+Aucun prérequis spécifique n'est nécessaire. Il suffit d'avoir un navigateur tel
+que Firefox.
 
-```bash
-git clone https://github.com/smnpp/spezialsuchmaschine.git
-cd spezialsuchmaschine
-```
+## Utilisation
 
-Ouvrir le fichier HTML dans un navigateur :
+Ouvrir le fichier `index.html` dans un navigateur :
 
 ```bash
 open index.html
@@ -39,7 +38,22 @@ open index.html
 Fonctionnement :
 
 -   Saisir une lettre ou un mot-clé pour afficher les marques correspondantes.
--   Naviguer parmi les cartes pour voir plus d'informations.
+-   Naviguer parmi les cartes pour voir plus d'informations à propos des marques
+    ou des modèles.
+
+## Documentation
+
+Pour plus d'informations sur la structure du projet, les technologies utilisées
+et les étapes pour contribuer, veuillez consulter le dossier `docs` qui contient
+la documentation complète.
+
+## Contribution
+
+Si vous souhaitez contribuer à ce projet, vous pouvez :
+
+1. Forker ce dépôt.
+2. Créer une branche pour vos modifications (`git checkout -b feature-branch`).
+3. Soumettre une pull request pour révision.
 
 ## Licence
 
