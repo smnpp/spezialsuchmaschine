@@ -1,7 +1,5 @@
-// Récupération des éléments de l'interface
 const searchInput = document.getElementById("search");
 
-// Fonction pour exécuter une requête SPARQL
 async function executeSparqlQuery(sparqlQuery) {
     const endpointUrl = "https://dbpedia.org/sparql";
     const fullUrl = `${endpointUrl}?query=${encodeURIComponent(
@@ -11,14 +9,13 @@ async function executeSparqlQuery(sparqlQuery) {
     try {
         const response = await fetch(fullUrl);
         const data = await response.json();
-        return data.results.bindings; // Retourne les résultats
+        return data.results.bindings;
     } catch (error) {
         console.error("Erreur lors de la requête SPARQL :", error);
         return [];
     }
 }
 
-// Fonction pour créer dynamiquement le conteneur des résultats
 function createResultsContainer() {
     let container = document.getElementById("search-autocomplete");
     if (!container) {
@@ -38,7 +35,6 @@ function createResultsContainer() {
     return container;
 }
 
-// Fonction pour supprimer dynamiquement le conteneur des résultats
 function removeResultsContainer() {
     const container = document.getElementById("search-autocomplete");
     if (container) {
@@ -46,18 +42,15 @@ function removeResultsContainer() {
     }
 }
 
-// Fonction pour afficher les résultats dans le conteneur
 function displayResults(modelsResults, brandsResults) {
     let container = document.getElementById("search-autocomplete");
 
-    // Si le conteneur n'existe pas, créez-le
     if (!container) {
         container = document.createElement("div");
         container.id = "search-autocomplete";
         searchInput.parentNode.appendChild(container);
     }
 
-    // Réinitialiser le conteneur
     container.innerHTML = "";
 
     const titleModel = document.createElement("h3");
@@ -66,7 +59,7 @@ function displayResults(modelsResults, brandsResults) {
     titleModel.style.color = "#333";
     container.appendChild(titleModel);
 
-    modelsResults.forEach((result) => {
+    modelsResults.forEach(result => {
         addLineResult(
             "modele",
             result.modelLabel.value,
@@ -81,7 +74,7 @@ function displayResults(modelsResults, brandsResults) {
     brandTitle.style.color = "#333";
     container.appendChild(brandTitle);
 
-    brandsResults.forEach((result) => {
+    brandsResults.forEach(result => {
         addLineResult(
             "marque",
             result.manufacturerLabel.value,
@@ -98,7 +91,6 @@ function addLineResult(type, label, name, container) {
     suggestion.style.cursor = "pointer";
     suggestion.style.borderBottom = "1px solid #f0f0f0";
 
-    // Créer un lien vers la page du modèle
     const modelLink = document.createElement("a");
     modelLink.href = `${type}.html?name=${encodeURIComponent(
         name.split("/").pop()
@@ -112,7 +104,7 @@ function addLineResult(type, label, name, container) {
 
     suggestion.addEventListener("click", () => {
         window.location.href = modelLink.href;
-        container.innerHTML = ""; // Vider les résultats après sélection
+        container.innerHTML = "";
     });
 
     suggestion.addEventListener("mouseover", () => {
@@ -126,15 +118,13 @@ function addLineResult(type, label, name, container) {
     container.appendChild(suggestion);
 }
 
-// Gestion de l'événement de saisie dans la barre de recherche
 searchInput.addEventListener("input", async () => {
     const userInput = searchInput.value.trim();
 
-    // Si l'entrée est vide, supprimer les résultats
     if (userInput.length < 1) {
         const container = document.getElementById("search-autocomplete");
         if (container) {
-            container.innerHTML = ""; // Réinitialiser les résultats
+            container.innerHTML = "";
         }
         return;
     }
@@ -146,8 +136,7 @@ searchInput.addEventListener("input", async () => {
     displayResults(modelsResults, brandsResults);
 });
 
-// Supprimer le conteneur lorsque l'utilisateur clique en dehors
-document.addEventListener("click", (event) => {
+document.addEventListener("click", event => {
     if (!searchInput.contains(event.target)) {
         removeResultsContainer();
     }

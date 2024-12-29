@@ -1,4 +1,3 @@
-// Fonction pour exécuter une requête SPARQL
 async function executeSparqlQuery(sparqlQuery) {
     const endpointUrl = "https://dbpedia.org/sparql";
     const fullUrl = `${endpointUrl}?query=${encodeURIComponent(
@@ -15,7 +14,6 @@ async function executeSparqlQuery(sparqlQuery) {
     }
 }
 
-// Fonction pour afficher les marques
 async function displayGermanBrands() {
     const brandsContainer = document.getElementById("brands-container");
     const brandsQuery = getAllDeutchCarBrand();
@@ -31,7 +29,6 @@ async function displayGermanBrands() {
         const card = document.createElement("div");
         card.className = "brand-card";
 
-        // Image
         if (brand.thumbnail) {
             const img = document.createElement("img");
             img.src = brand.thumbnail.value;
@@ -40,7 +37,6 @@ async function displayGermanBrands() {
             card.appendChild(img);
         }
 
-        // Titre
         const title = document.createElement("h3");
         title.className = "brand-title";
         title.textContent = brand.manufacturerLabel
@@ -48,7 +44,6 @@ async function displayGermanBrands() {
             : "Marque inconnue";
         card.appendChild(title);
 
-        // Lien vers la page de la marque
         const link = document.createElement("a");
         link.href = `marque.html?name=${encodeURIComponent(
             brand.manufacturer.value.split("/").pop()
@@ -61,5 +56,4 @@ async function displayGermanBrands() {
     });
 }
 
-// Charger les marques au chargement de la page
 document.addEventListener("DOMContentLoaded", displayGermanBrands);

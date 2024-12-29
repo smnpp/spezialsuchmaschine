@@ -3,7 +3,6 @@ function getBrandNameFromURL() {
     return params.get("name");
 }
 
-// Fonction pour exécuter une requête SPARQL
 async function executeSparqlQuery(sparqlQuery) {
     const endpointUrl = "https://dbpedia.org/sparql";
     const fullUrl = `${endpointUrl}?query=${encodeURIComponent(
@@ -20,14 +19,12 @@ async function executeSparqlQuery(sparqlQuery) {
     }
 }
 
-// Fonction générique pour récupérer une valeur unique
 function getValue(results, key) {
     return (
         results.find(binding => binding[key])?.[key]?.value || "Non disponible"
     );
 }
 
-// Fonction générique pour récupérer des valeurs multiples sans doublons
 function getUniqueValues(results, key) {
     return [
         ...new Set(
@@ -42,11 +39,10 @@ function updateContainer(containerId, content) {
     const container = document.getElementById(containerId);
     const parent = container.parentElement;
     if (content && content !== "Non disponible") {
-        container.textContent = content; // Met à jour le contenu
-        container.style.display = ""; // Affiche le conteneur s'il était masqué
+        container.textContent = content;
+        container.style.display = "";
     } else {
-        // container.textContent = "Donnée non disponible"; // Masque le conteneur s'il est vide
-        parent.style.display = "none"; // Masque le container
+        parent.style.display = "none";
     }
 }
 
@@ -58,7 +54,6 @@ async function displayBrandInfo() {
         return;
     }
 
-    // Récupérer les informations via des requêtes segmentées
     const labelResults = await executeSparqlQuery(getBrandLabel(brandName));
     const abstractResults = await executeSparqlQuery(
         getBrandAbstract(brandName)
@@ -115,7 +110,7 @@ async function displayBrandInfo() {
     updateContainer("founder", founder.join(", "));
 
     const imagesContainer = document.getElementById("brand-thumbnail");
-    imagesContainer.innerHTML = ""; // Réinitialiser le conteneur
+    imagesContainer.innerHTML = "";
     if (thumbnail !== "Non disponible") {
         const img = document.createElement("img");
         img.src = thumbnail;
@@ -132,8 +127,8 @@ async function displayBrandInfo() {
         const link = document.createElement("a");
         link.href = website;
         link.textContent = `Site officiel de ${label}`;
-        link.target = "_blank"; // Ouvrir dans un nouvel onglet
-        link.rel = "noopener noreferrer"; // Bonnes pratiques de sécurité
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
         link.style.color = "#007bff";
         link.style.textDecoration = "none";
 
@@ -146,12 +141,11 @@ async function displayBrandInfo() {
             () => (link.style.textDecoration = "none")
         );
 
-        websiteContainer.innerHTML = ""; // Réinitialiser le conteneur
+        websiteContainer.innerHTML = "";
         websiteContainer.appendChild(link);
     } else {
         websiteContainer.style.display = "none";
     }
 }
 
-// Exécuter la fonction lors du chargement de la page
 document.addEventListener("DOMContentLoaded", displayBrandInfo);
