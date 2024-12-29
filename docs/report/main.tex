@@ -1,0 +1,222 @@
+\documentclass[a4paper]{article}
+
+%====================== PACKAGES ======================
+
+\usepackage[french]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{setspace}
+\usepackage{abstract}
+\usepackage[T1]{fontenc}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage{subfig}
+
+%====================== INFORMATION ET REGLES ======================
+
+%rajouter les numérotation pour les \paragraphe et \subparagraphe
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+%======================== DEBUT DU DOCUMENT ========================
+
+\begin{document}
+
+%régler l'espacement entre les lignes
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+%=========================== PAGE DE GARDE ===========================
+
+\begin{center}
+% Upper part of the page
+\includegraphics[width=0.35\textwidth]{./logo}~\\[2cm]
+\vspace{3cm}
+% Title
+\textsc{\LARGE INSA Lyon}\\[0.5cm]
+\textsc{\Large Département Informatique}\\[0.5cm]
+\HRule \\[0.4cm]
+{\huge \bfseries Projet Web Sémantique\\
+Spezialsuchmaschine\\[0.4cm] }
+\HRule \\[1.5cm]
+% Author and supervisor
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Auteurs:} \\
+Hazim \textsc{Asri}\\
+Nihal \textsc{Boutadghart}\\
+Malte \textsc{Camier}\\
+Jassir \textsc{Habba}\\
+Junior \textsc{Noukam}\\
+Simon \textsc{Perret}\\
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Professeurs:} \\
+M. \textsc{Bento}\\
+Mme. \textsc{Calabretto}\\
+\end{flushright}
+\end{minipage}
+\vfill
+% Bottom of the page
+{\large \today}
+    
+\end{center}
+
+
+%======================== TABLE DES MATIERES ========================
+\newpage
+~
+\thispagestyle{empty}
+
+\tableofcontents
+\thispagestyle{empty}
+\setcounter{page}{0}
+
+\renewcommand{\arraystretch}{1.5}
+
+%====================== INCLUSION DES PARTIES ======================
+
+\newpage
+
+% Introduction
+\section{Introduction}
+Le projet \textbf{Web Sémantique} réalisé dans le cadre de l'UE 4-IF-WS avait pour objectif principal de concevoir un moteur de recherche spécialisé exploitant les technologies du Web Sémantique. 
+
+Dans ce projet, nous avons choisi de nous concentrer sur les \textit{marques automobiles allemandes} et leurs modèles, en utilisant la base de données DBpedia comme source d'information.
+
+Les objectifs spécifiques étaient :
+\begin{itemize}
+    \item Explorer et interroger des données RDF via des requêtes SPARQL.
+    \item Restituer les résultats de manière interactive et intuitive.
+    \item Proposer une interface claire et accessible pour naviguer dans les résultats.
+\end{itemize}
+
+\newpage
+
+% Technologies et outils utilisés
+\section{Technologies et Outils Utilisés}
+\subsection{Technologies Principales}
+\begin{itemize}
+    \item \textbf{SPARQL} : Pour effectuer des requêtes sémantiques sur DBpedia.
+    \item \textbf{DBpedia} : Base de données RDF pour récupérer des informations liées aux marques automobiles.
+    \item \textbf{HTML/CSS} : Structure et mise en forme de l'interface utilisateur.
+    \item \textbf{JavaScript} : Pour la logique de l'application et les interactions dynamiques.
+\end{itemize}
+
+\subsection{Outils Utilisés}
+\begin{itemize}
+    \item \textbf{Visual Studio Code} : IDE principal pour le développement.
+    \item \textbf{Git} : Gestion de version et collaboration.
+    \item \textbf{Chrome DevTools} : Débogage et optimisation de l'interface utilisateur.
+\end{itemize}
+
+\newpage
+
+% Architecture du projet
+\section{Architecture du Projet}
+\subsection{Organisation des Fichiers}
+Le projet est structuré comme suit :
+\begin{verbatim}
+/-- index.html
+/-- marque.html
+/-- styles/
+    |-- main.css
+    |-- marque.css
+/-- scripts/
+    |-- requetes.js
+    |-- marque.js
+    |-- recherche.js
+\end{verbatim}
+
+\subsection{Flux de Données}
+\begin{itemize}
+    \item L'utilisateur saisit une requête dans la barre de recherche.
+    \item Une requête SPARQL est générée dynamiquement en JavaScript.
+    \item Les données sont récupérées depuis DBpedia et affichées sous forme de cartes ou de listes.
+\end{itemize}
+
+\newpage
+
+% Fonctionnalités
+\section{Fonctionnalités}
+\subsection{Recherche Interactive}
+\begin{itemize}
+    \item Recherche dynamique des marques et modèles en fonction des lettres saisies.
+    \item Résultats affichés dans un conteneur avec auto-complétion.
+\end{itemize}
+
+\subsection{Affichage des Marques}
+\begin{itemize}
+    \item Liste des marques allemandes triées par ordre alphabétique.
+    \item Informations supplémentaires disponibles pour chaque marque (année de fondation, logo, etc.).
+\end{itemize}
+
+\subsection{Affichage des Modèles}
+\begin{itemize}
+    \item Informations détaillées sur les modèles : description, moteur, année de production, etc.
+    \item Images illustrant les modèles.
+\end{itemize}
+
+\newpage
+
+% Problèmes rencontrés
+\section{Problèmes Rencontrés}
+\begin{itemize}
+    \item \textbf{Dépendance à DBpedia} : Temps de réponse variable et indisponibilité occasionnelle.
+    \item \textbf{Complexité des Requêtes SPARQL} : Syntaxe délicate pour des résultats spécifiques.
+    \item \textbf{Résultats incomplets} : Certaines données manquantes ou mal formatées.
+\end{itemize}
+
+\textbf{Solutions} :
+\begin{itemize}
+    \item Prévoir une vidéo de démonstration en cas de panne de DBpedia.
+    \item Améliorer la gestion des erreurs et des données manquantes dans le code.
+\end{itemize}
+
+\newpage
+
+% Réflexion sur le Web Sémantique
+\section{Réflexion sur le Web Sémantique}
+\subsection{Avantages}
+\begin{itemize}
+    \item Accès à des données interconnectées et structurées.
+    \item Possibilité de requêtes complexes pour des besoins spécifiques.
+\end{itemize}
+
+\subsection{Inconvénients}
+\begin{itemize}
+    \item Complexité pour les débutants.
+    \item Dépendance aux bases externes et à leur disponibilité.
+    \item Difficultés liées au manque de standardisation dans certains domaines.
+\end{itemize}
+
+\newpage
+
+% Conclusion
+\section{Conclusion}
+\begin{itemize}
+    \item \textbf{Bilan} : Création réussie d'un moteur de recherche spécialisé pour les marques automobiles allemandes.
+    \item \textbf{Compétences Acquises} :
+    \begin{itemize}
+        \item Maîtrise des requêtes SPARQL.
+        \item Intégration des données RDF dans une application web.
+        \item Développement d'une interface utilisateur interactive.
+    \end{itemize}
+    \item \textbf{Perspectives} :
+    \begin{itemize}
+        \item Ajouter des données supplémentaires et améliorer l'interface.
+        \item Explorer d'autres bases de données sémantiques.
+    \end{itemize}
+\end{itemize}
+
+\newpage
+
+
+\end{document}
